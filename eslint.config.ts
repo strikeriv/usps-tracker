@@ -1,20 +1,21 @@
+import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
-import prettierPlugin from 'eslint-plugin-prettier';
-import { defineConfig } from 'eslint/config';
+import tsPlugin from 'typescript-eslint';
+import reactPlugin from 'eslint-plugin-react';
+import prettier from 'eslint-plugin-prettier';
 
 export default defineConfig([
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    plugins: { js, prettierPlugin },
-    extends: ['js/recommended', 'plugin:prettier/recommended'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: { globals: globals.browser },
+    plugins: { js, prettier, reactPlugin },
+    extends: ['plugin:react/jsx-runtime'],
     rules: {
-      'prettier/prettier': 'error',
+      'prettier/prettier': ['error', { singleQuote: true, semi: true }],
+      'no-unused-vars': 'warn',
     },
   },
-  tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  tsPlugin.configs.recommended,
+  reactPlugin.configs.flat.recommended,
 ]);
